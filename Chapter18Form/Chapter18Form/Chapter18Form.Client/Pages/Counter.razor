@@ -1,0 +1,37 @@
+﻿@page "/person"
+@using System.ComponentModel.DataAnnotations
+@using Chapter18Form.Shared
+@rendermode InteractiveAuto
+<EditForm Model="@person" OnValidSubmit="HandleValidSubmit">
+     <DataAnnotationsValidator />
+ @*   <ValidationSummary /> *@
+
+    <div>
+        <label for="name">Name:</label>
+        <InputText id="name" @bind-Value="person.Name" />
+        <ValidationMessage For="@(() => person.Name)" />
+    </div>
+
+    <div>
+        <label for="name">Surname:</label>
+        <InputText id="name" @bind-Value="person.Surname" />
+        <ValidationMessage For="@(() => person.Surname)" />
+    </div>
+
+    <div>
+        <label for="age">Age:</label>
+        <InputNumber id="age" @bind-Value="person.Age" />
+        <ValidationMessage For="@(() => person.Age)" />
+    </div>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private Person person = new Person();
+
+    private void HandleValidSubmit()
+    {
+        // Logic for handling form submission when the input is valid
+    }
+}

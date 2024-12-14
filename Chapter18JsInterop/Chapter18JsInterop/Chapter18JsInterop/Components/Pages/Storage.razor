@@ -1,0 +1,42 @@
+﻿@page "/storage"
+@rendermode InteractiveServer
+@inject IBrowserStorageService StorageService
+
+<h3>Storage Example</h3>
+
+<button @onclick="SetLocalStorage">Set Local Storage</button>
+<button @onclick="GetLocalStorage">Get Local Storage</button>
+<button @onclick="ClearLocalStorage">Clear Local Storage</button>
+
+<p>@message</p>
+
+@code {
+    private string message;
+
+    protected override Task OnInitializedAsync()
+    {
+        if (StorageService is not null)
+            StorageService.Init();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task SetLocalStorage()
+    {
+        await StorageService.SetItemAsync
+            ("local", "myKey", "Hello, Blazor!");
+        message = "Data set in Local Storage.";
+    }
+
+    private async Task GetLocalStorage()
+    {
+        var result = await StorageService
+            .GetItemAsync<string>("local", "myKey");
+        message = $"Retrieved from Local Storage: {result}";
+    }
+
+    private async Task ClearLocalStorage()
+    {
+        await StorageService.ClearAsync("local");
+        message = "Local Storage cleared.";
+    }
+}

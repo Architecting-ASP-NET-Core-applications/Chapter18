@@ -1,0 +1,27 @@
+﻿@page "/preferences"
+@rendermode InteractiveServer
+@inject IUserPreferencesService UserPreferences
+<h3>User Preferences</h3>
+<div>
+    <label>Select Theme:</label>
+    <select @onchange="OnThemeChanged">
+        <option value="Light"
+                selected="@IsSelected("Light")">Light</option>
+        <option value="Dark"
+                selected="@IsSelected("Dark")">Dark</option>
+    </select>
+</div>
+<p>Current Theme: @UserPreferences.Theme</p>
+@code {
+    private void OnThemeChanged(ChangeEventArgs e)
+    {
+        var selectedTheme = e.Value.ToString();
+        UserPreferences.SetTheme(selectedTheme);
+    }
+    private bool IsSelected(string theme)
+        => UserPreferences.Theme == theme;
+    protected override void OnInitialized()
+    => UserPreferences.OnChange += StateHasChanged;
+    public void Dispose()
+        => UserPreferences.OnChange -= StateHasChanged;
+}

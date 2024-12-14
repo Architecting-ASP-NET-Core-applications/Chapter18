@@ -1,0 +1,19 @@
+﻿@rendermode InteractiveServer
+<div style="border: 5px solid gray;
+        margin: 15px; 
+        background-color: #DCDCDC; 
+        padding: 5px">
+    <h3>Container</h3>
+    @* <p>Container value: @myCheck</p> *@
+    <Content OnClickCallback="ContainerCallBack" />
+</div>
+
+
+@code {
+    bool myCheck;
+
+    private void ContainerCallBack(bool e)
+    {
+        myCheck = e;
+    }
+}

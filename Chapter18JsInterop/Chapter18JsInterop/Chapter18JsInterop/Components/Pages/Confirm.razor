@@ -1,0 +1,49 @@
+﻿@rendermode InteractiveServer
+@inject IModalService ModalService;
+<div id="id-modal" 
+        class="modal fade" tabindex="-1" 
+        aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" 
+                    id="modalLabel">@Title</h5>
+                <button type="button" 
+                    class="btn-close" 
+                    data-bs-dismiss="modal" 
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Message
+            </div>
+            <div class="modal-footer">
+                <button 
+                    type="button" 
+                    class="btn btn-secondary" 
+                    @onclick="OnCancel" 
+                    data-bs-dismiss="modal">Cancel</button>
+                <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    @onclick="OnConfirm">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Chapter 18";
+    [Parameter]
+    public string Message { get; set; } = "???";
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+    [Parameter]
+    public EventCallback OnConfirm { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            if (ModalService is not null)
+                await ModalService.Init();
+    }
+}

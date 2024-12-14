@@ -1,0 +1,30 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject IModalService ConfirmService;
+<PageTitle>Home</PageTitle>
+<button @onclick="RequestDelete">Open</button>
+<Confirm OnConfirm="ConfirmDelete" Message="Welcome to Javascript interop!" />
+
+
+
+@code{
+
+    public string Name{ get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            if (ConfirmService is not null)
+                await ConfirmService.Init();
+    }
+    public async Task RequestDelete()
+    {
+        if (ConfirmService is not null)
+            await ConfirmService.ShowModal("id-modal");
+    }
+    public async Task ConfirmDelete()
+    {
+        if (ConfirmService is not null)
+            await ConfirmService.HideModal("id-modal");
+    }
+}

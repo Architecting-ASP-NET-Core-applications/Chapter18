@@ -1,0 +1,29 @@
+﻿@rendermode InteractiveServer
+<div style="border: 5px solid gray;
+        margin: 15px; 
+        background-color: #F0F0F0; 
+        padding: 5px">
+<h3>Content</h3>
+ <p>The value is: @Count</p>
+
+@* <p>Content value: @myCheck</p>
+<p>
+    <button @onclick="OnClickEvent">
+        Trigger a Parent component method
+    </button>
+</p> *@
+</div>
+@code {
+    [CascadingParameter] public int Count { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnClickCallback { get; set; }
+
+    bool myCheck;
+
+    private void OnClickEvent()
+    {
+        myCheck = !myCheck;
+        OnClickCallback.InvokeAsync(myCheck);
+    }
+}
